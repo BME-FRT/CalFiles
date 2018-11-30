@@ -1,0 +1,4 @@
+;last modified 9/23/2018 12:15:26 PM by Adam Krakkai
+
+[Motor Controller 2017]
+AMK_TorqueLimit_1 = +(#AMK_TorqueLimitPositive_1,#AMK_TorqueLimitNegative_1)

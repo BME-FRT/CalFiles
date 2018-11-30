@@ -1,0 +1,83 @@
+;last modified 2017. 06. 24. 15:34:13 by Laci
+
+[Energy]
+
+;Electric Power
+PowEWATT = *(#CurDC,#HV_VolAft)
+PowE = /(#PowEWATT, 1000)
+PowE = Set(DIM = kW)
+PowE_MA500ms = F(#PowE, F(AVG- 0.5 Sec))
+
+
+;Electric Power for Rules compliant energy calculation
+PowRegEM = *(#PowE, 0.9)
+PowEM = If(#PowE, >=, 0, #PowE, #PowRegEM)
+
+
+ErgEMAux= Integrate(#PowEM)
+ErgEM = /(#ErgEMAux,3.6)
+ErgEM = Set(DIM, Wh)
+ErgEMTotal = LastValue(#ErgEM)
+
+
+ErgEMLapAux= Integrate(#PowEM, 0)
+ErgEMLap = /(#ErgEMLapAux,3.6)
+ErgEMLap = Set(DIM, Wh)
+
+ErgEMFullLap = Derivate(#ErgEMLap)
+
+
+
+;Motor Power, Energy
+PowMot =  If(#PowE, >=, 0, #PowE, 0)
+ErgMotAux = Integrate(#PowMot)
+ErgMot = /(#ErgMotAux, 3.6)
+ErgMot = Set(DIM, Wh)
+ErgMotTotal = LastValue(#ErgMot)
+
+;Regeneration Power, Energy
+PowReg = If(#PowE, <=, 0, #PowE, 0)
+ErgRegAux = Integrate(#PowReg)
+ErgReg = /(#ErgRegAux, 3.6)
+ErgReg = Set(DIM, Wh)
+ErgRegTotal = LastValue(#ErgReg)
+
+;Maximum Power calculations
+PowMaxMot = MaxValue(#PowE, 0.01)
+PowMaxReg = MinValue(#PowE, 0.01)
+
+;RAW energy calculation
+ErgAux= Integrate(#PowE)
+Erg = /(#ErgAux,3.6)
+Erg = Set(DIM, Wh)
+ErgLapAux = Integrate(#PowE, 0)
+ErgLap = /(#ErgLapAux, 3.6)
+ErgLap = Set(DIM, Wh)
+ErgTotal = LastValue(#Erg)
+
+ErgAbs =-(#ErgMot,#ErgReg)
+
+;Calculating used accu capacity [mAh]
+Capacity = Integrate(#CurDC)
+Capacity = /(#Capacity, 3.6)
+Capacity = Set(DIM, mAh)
+CapacityTotal = LastValue(#Capacity)
+CapacityTotal = Set(DIM, mAh)
+Capacity_offset = Integrate(#CurDC_offset)
+Capacity_offset = /(#Capacity_offset, 3.6)
+Capacity_offset = Set(DIM, mAh)
+
+
+
+
+
+Delete(#PowEWATT)
+Delete(#PowRegEM)
+Delete(#ErgEMAux)
+Delete(#ErgEMLapAux)
+Delete(#ErgAux)
+Delete(#ErgLapAux)
+Delete(#ErgMotAux)
+Delete(#ErgRegAux)
+
+

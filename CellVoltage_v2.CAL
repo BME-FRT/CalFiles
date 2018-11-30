@@ -1,0 +1,128 @@
+;last modified 2017. 06. 29. 14:42:02 by Laci
+
+[CellVoltage_v2]
+
+
+
+IsID_S2M1C1 = If(#HVACC_CellID, =, 30, 1, 0)
+CelVol_S2M1C1 = FillFromBool(#HVACC_CellVol, #IsID_S2M1C1)
+CelVol_S2M1C1 = Set(DIM, mV)
+Delete(IsID_S2M1C1)
+
+IsID_S2M1C2 = If(#HVACC_CellID, =, 31, 1, 0)
+CelVol_S2M1C2 = FillFromBool(#HVACC_CellVol, #IsID_S2M1C2)
+CelVol_S2M1C2 = Set(DIM, mV)
+Delete(IsID_S2M1C2)
+
+IsID_S2M1C3 = If(#HVACC_CellID, =, 32, 1, 0)
+CelVol_S2M1C3 = FillFromBool(#HVACC_CellVol, #IsID_S2M1C3)
+CelVol_S2M1C3 = Set(DIM, mV)
+Delete(IsID_S2M1C3)
+
+IsID_S2M1C4 = If(#HVACC_CellID, =, 33, 1, 0)
+CelVol_S2M1C4 = FillFromBool(#HVACC_CellVol, #IsID_S2M1C4)
+CelVol_S2M1C4 = Set(DIM, mV)
+Delete(IsID_S2M1C4)
+
+IsID_S2M2C1 = If(#HVACC_CellID, =, 34, 1, 0)
+CelVol_S2M2C1 = FillFromBool(#HVACC_CellVol, #IsID_S2M2C1)
+CelVol_S2M2C1 = Set(DIM, mV)
+Delete(IsID_S2M2C1)
+
+IsID_S2M2C2 = If(#HVACC_CellID, =, 35, 1, 0)
+CelVol_S2M2C2 = FillFromBool(#HVACC_CellVol, #IsID_S2M2C2)
+CelVol_S2M2C2 = Set(DIM, mV)
+Delete(IsID_S2M2C2)
+
+IsID_S2M2C3 = If(#HVACC_CellID, =, 36, 1, 0)
+CelVol_S2M2C3 = FillFromBool(#HVACC_CellVol, #IsID_S2M2C3)
+CelVol_S2M2C3 = Set(DIM, mV)
+Delete(IsID_S2M2C3)
+
+IsID_S2M2C4 = If(#HVACC_CellID, =, 37, 1, 0)
+CelVol_S2M2C4 = FillFromBool(#HVACC_CellVol, #IsID_S2M2C4)
+CelVol_S2M2C4 = Set(DIM, mV)
+Delete(IsID_S2M2C4)
+
+IsID_S2M3C1 = If(#HVACC_CellID, =, 38, 1, 0)
+CelVol_S2M3C1 = FillFromBool(#HVACC_CellVol, #IsID_S2M3C1)
+CelVol_S2M3C1 = Set(DIM, mV)
+Delete(IsID_S2M3C1)
+
+IsID_S2M3C2 = If(#HVACC_CellID, =, 39, 1, 0)
+CelVol_S2M3C2 = FillFromBool(#HVACC_CellVol, #IsID_S2M3C2)
+CelVol_S2M3C2 = Set(DIM, mV)
+Delete(IsID_S2M3C2)
+
+IsID_S2M3C3 = If(#HVACC_CellID, =, 40, 1, 0)
+CelVol_S2M3C3 = FillFromBool(#HVACC_CellVol, #IsID_S2M3C3)
+CelVol_S2M3C3 = Set(DIM, mV)
+Delete(IsID_S2M3C3)
+
+IsID_S2M3C4 = If(#HVACC_CellID, =, 41, 1, 0)
+CelVol_S2M3C4 = FillFromBool(#HVACC_CellVol, #IsID_S2M3C4)
+CelVol_S2M3C4 = Set(DIM, mV)
+Delete(IsID_S2M3C4)
+
+IsID_S2M4C1 = If(#HVACC_CellID, =, 45, 1, 0)
+CelVol_S2M4C1 = FillFromBool(#HVACC_CellVol, #IsID_S2M4C1)
+CelVol_S2M4C1 = Set(DIM, mV)
+Delete(IsID_S2M4C1)
+
+IsID_S2M4C2 = If(#HVACC_CellID, =, 46, 1, 0)
+CelVol_S2M4C2 = FillFromBool(#HVACC_CellVol, #IsID_S2M4C2)
+CelVol_S2M4C2 = Set(DIM, mV)
+Delete(IsID_S2M4C2)
+
+IsID_S2M4C3 = If(#HVACC_CellID, =, 47, 1, 0)
+CelVol_S2M4C3 = FillFromBool(#HVACC_CellVol, #IsID_S2M4C3)
+CelVol_S2M4C3 = Set(DIM, mV)
+Delete(IsID_S2M4C3)
+
+IsID_S2M4C4 = If(#HVACC_CellID, =, 48, 1, 0)
+CelVol_S2M4C4 = FillFromBool(#HVACC_CellVol, #IsID_S2M4C4)
+CelVol_S2M4C4 = Set(DIM, mV)
+Delete(IsID_S2M4C4)
+
+IsID_S2M5C1 = If(#HVACC_CellID, =, 49, 1, 0)
+CelVol_S2M5C1 = FillFromBool(#HVACC_CellVol, #IsID_S2M5C1)
+CelVol_S2M5C1 = Set(DIM, mV)
+Delete(IsID_S2M5C1)
+
+IsID_S2M5C2 = If(#HVACC_CellID, =, 50, 1, 0)
+CelVol_S2M5C2 = FillFromBool(#HVACC_CellVol, #IsID_S2M5C2)
+CelVol_S2M5C2 = Set(DIM, mV)
+Delete(IsID_S2M5C2)
+
+IsID_S2M5C3 = If(#HVACC_CellID, =, 51, 1, 0)
+CelVol_S2M5C3 = FillFromBool(#HVACC_CellVol, #IsID_S2M5C3)
+CelVol_S2M5C3 = Set(DIM, mV)
+Delete(IsID_S2M5C3)
+
+IsID_S2M5C4 = If(#HVACC_CellID, =, 52, 1, 0)
+CelVol_S2M5C4 = FillFromBool(#HVACC_CellVol, #IsID_S2M5C4)
+CelVol_S2M5C4 = Set(DIM, mV)
+Delete(IsID_S2M5C4)
+
+IsID_S2M6C1 = If(#HVACC_CellID, =, 53, 1, 0)
+CelVol_S2M6C1 = FillFromBool(#HVACC_CellVol, #IsID_S2M6C1)
+CelVol_S2M6C1 = Set(DIM, mV)
+Delete(IsID_S2M6C1)
+
+IsID_S2M6C2 = If(#HVACC_CellID, =, 54, 1, 0)
+CelVol_S2M6C2 = FillFromBool(#HVACC_CellVol, #IsID_S2M6C2)
+CelVol_S2M6C2 = Set(DIM, mV)
+Delete(IsID_S2M6C2)
+
+IsID_S2M6C3 = If(#HVACC_CellID, =, 55, 1, 0)
+CelVol_S2M6C3 = FillFromBool(#HVACC_CellVol, #IsID_S2M6C3)
+CelVol_S2M6C3 = Set(DIM, mV)
+Delete(IsID_S2M6C3)
+
+IsID_S2M6C4 = If(#HVACC_CellID, =, 56, 1, 0)
+CelVol_S2M6C4 = FillFromBool(#HVACC_CellVol, #IsID_S2M6C4)
+CelVol_S2M6C4 = Set(DIM, mV)
+Delete(IsID_S2M6C4)
+
+
+

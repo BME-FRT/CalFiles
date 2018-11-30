@@ -1,0 +1,10 @@
+;last modified 7/14/2018 1:01:52 AM by Adam Krakkai
+
+[2018_AMK_Status]       ;by krakkai And Zé
+
+AMK_bSystemReady_2 = And(#AMK_Status_2, 0x0080)
+AMK_bSystemReady_2 = /( #AMK_bSytemReady_2, 128)
+
+
+
+

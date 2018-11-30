@@ -1,0 +1,75 @@
+;last modified 2016.06.09. 14:15:01 by Laszlo
+
+[Speed]
+; Calculating Motor RPMs, (AMK_AVX represented in 2's complement)
+
+MotRPM1Comp = -(#AMK_AV1, 65536)
+MotRPM1 =If (#AMK_AV1, <=, 32768, #AMK_AV1,  #MotRPM1Comp)
+
+MotRPM2Comp = -(#AMK_AV2, 65536)
+MotRPM2 =If (#AMK_AV2, <=, 32768, #AMK_AV2,  #MotRPM2Comp)
+
+MotRPM3Comp = -(#AMK_AV3, 65536)
+MotRPM3 =If (#AMK_AV3, <=, 32768, #AMK_AV3,  #MotRPM3Comp)
+
+MotRPM4Comp = -(#AMK_AV4, 65536)
+MotRPM4 =If (#AMK_AV4, <=, 32768, #AMK_AV4,  #MotRPM4Comp)
+
+Delete(#MotRPM1Comp)
+Delete(#MotRPM2Comp)
+Delete(#MotRPM3Comp)
+Delete(#MotRPM4Comp)
+
+;Calculating Wheelspeed [km/h]
+;Motor rotations/minute contained #AMK_AVX [1/min] channels
+
+;Wheelspeed = MotRev /PGT/60*2Pi*LTR*3.6
+
+;Planetary Gear Transmission = 15.625 [-]
+;Loaded Tire Radius  = 0.223 [m]
+
+
+;Calculating WheelSpeed from Motor RPMs.
+WhlSpd1 = *(#MotRPM1, 0.00538)
+WhlSpd1 = Set(DIM, km/h);
+
+WhlSpd2 = *(#MotRPM2, 0.00538)
+WhlSpd2 = Set(DIM, km/h);
+
+WhlSpd3 = *(#MotRPM3, 0.00538)
+WhlSpd3 = Set(DIM, km/h);
+
+WhlSpd4 = *(#MotRPM4, 0.00538)
+WhlSpd4 = Set(DIM, km/h);
+
+;Calculating minimum Wheelspeed
+WhlSpdMinF = Min(#WhlSpd1, #WhlSpd2)
+WhlSpdMinR = Min(#WhlSpd3, #WhlSpd4)
+WhlSpdMin = Min(#WhlSpdMinF, #WhlSpdMinR)
+
+
+;Calculating maximum Wheelspeed
+WhlSpdMaxF = Max(#WhlSpd1, #WhlSpd2)
+WhlSpdMaxR = Max(#WhlSpd3, #WhlSpd4)
+WhlSpdMax = Max(#WhlSpdMaxF, #WhlSpdMaxR)
+
+
+;Estimating vehicle speed according to WheelSpeeds
+VhclSpdRPM =  If(#BrkPos, >=, 10, #WhlSpdMax, #WhlSpdMin)
+
+;Calculating Maximum Speed
+V_GPS_Max = MaxValue(#V_GPS)
+
+
+;Delete(#WhlSpd1)
+;Delete(#WhlSpd2)
+;Delete(#WhlSpd3)
+;Delete(#WhlSpd4)
+Delete(#WhlSpdMinF)
+Delete(#WhlSpdMinR)
+Delete(#WhlSpdMin)
+Delete(#WhlSpdMaxF)
+Delete(#WhlSpdMaxR)
+Delete(#WhlSpdMax)
+
+

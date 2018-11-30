@@ -1,0 +1,6 @@
+;last modified 2017. 06. 23. 16:23:33 by Laci
+
+[HV Accumulator Cell Values]
+
+HV_Accumulator_Cell_ID =  And(#HV Cell Values 1, 0xFF00)
+HV_Accumulator_Cell_ID = /(#HV_Accumulator_Cell_ID, 256)

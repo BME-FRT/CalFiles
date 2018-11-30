@@ -1,0 +1,42 @@
+;last modified 10/5/2018 3:05:03 PM by erosdi
+
+[HV Accumulator ECU 2017]
+
+HV_Voltage_After_AIR = *(#HV_Voltage_Before_&_After_AIRs_32BIT, 10)
+HV_Voltage_After_AIR = Mod(#HV_Voltage_After_Air,65536)
+HV_Voltage_After_AIR = *(#HV_Voltage_After_Air,0.1)
+
+HV_Voltage_Before_AIR = *(#HV_Voltage_Before_&_After_AIRs_32BIT, 10)
+HV_Voltage_Before_AIR = /(#HV_Voltage_Before_AIR, 65536)
+HV_Voltage_Before_AIR = *(#HV_Voltage_Before_AIR, 0.1)
+
+HV_Current_neg = -(#HV_Current, 6553.6)
+HV_Current_signaled =If (#HV_Current, <=, 3276.8, #HV_Current,  #HV_Current_neg)
+HV_Current_signaled = Set (Dim, A)
+
+Capacity = Integrate(#HV_Current_signaled)
+Capacity = /(#Capacity, 3.6)
+Capacity = Set(DIM, mAh)
+CapacityTotal = LastValue(#Capacity)
+CapacityTotal = Set(DIM, mAh)
+
+Power_Electric =  *(#HV_Voltage_Before_AIR,#HV_Current_signaled)
+Power_Electric =  /(#Power_Electric, 1000)
+Power_Electric = Set(DIM, kW)
+
+;Electric Power for Rules compliant energy calculation
+Power_Regenerative_EM = *(#Power_Electric, 0.9)
+Power_Electric_EM = If(#Power_Electric, >=, 0, #Power_Electric, #Power_Regenerative_EM)
+
+
+Energy_Electric_EM= Integrate(#Power_Electric_EM)
+Energy_Electric_EM = /(#Energy_Electric_EM,3.6)
+Energy_Electric_EM = Set(DIM, Wh)
+Energy_Electric_EM_Total = LastValue(#Energy_Electric_EM)
+
+Energy_Electric= Integrate(#Power_Electric)
+Energy_Electric = /(#Energy_Electric,3.6)
+Energy_Electric = Set(DIM, Wh)
+Energy_Electric_Total = LastValue(#Energy_Electric)
+
+

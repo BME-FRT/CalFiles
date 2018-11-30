@@ -1,0 +1,77 @@
+;last modified 20.03.2013 10:01:00 by RB
+
+[CalcLapTime]
+C1=Const(1,25)
+RunningLapTime=Integrate(#C1,0)
+
+[Replace_Bad_GPS]
+IfExists(@GPSValid)
+IfExists(@GPS_Latitude)
+IfExists(@GPS_Longitude)
+C1 = F'(#RunningLapTime)
+C1 = If(#C1,<,0,1,0)     ; Lap Indicator
+
+C1 = *(#C1,@GPSValid)   ; all "Valid Lapindicators)
+
+C10 = If(@GPSValid,>,0,@GPS_Latitude,0)
+C20 = If(@GPSValid,>,0,@GPS_Longitude,0)
+
+C100 = FillFromBool(#C10,#C1)
+C200 = FillFromBool(#C20,#C1)
+
+C1 = MaxValue(#C100,25)
+C2 = MinValue(#C100,25)
+Latitude_Hold = If(#C1,=,0.0,#C2,#C1)
+
+C1 = MaxValue(#C200,25)
+C2 = MinValue(#C200,25)
+Longitude_Hold = If(#C1,=,0.0,#C2,#C1)
+
+Latitude_new  = If(@GPSValid,>,0, @GPS_Latitude, #Latitude_hold)
+Longitude_new = If(@GPSValid,>,0,@GPS_Longitude,#Longitude_hold)
+
+Delete(#Latitude_Hold)
+Delete(#Longitude_Hold)
+
+[Lat_Minutes]
+IfExists(#Latitude_new)
+C1=*(#Latitude_new, 100)  ; z.B. 49,833 wird zu 4983,3
+C2=Mod(#C1, 100)      ; 83,3
+C3=-(#C1, #C2)        ; 4900
+C4=/(#C3, 100)        ; 49
+C5=*(#C2, 60)         ; 5000
+C5=/(#C5, 10000)      ; 0,50
+
+Result =+(#C4, #C5)   ; 49,50
+Result=Set(DIM='°')
+
+[Lon_Minutes]
+IfExists(#Longitude_new)
+C1=*(#Longitude_new, 100)
+C2=Mod(#C1, 100)
+C3=-(#C1, #C2)
+C4=/(#C3, 100)
+C5=*(#C2, 60)
+C5=/(#C5, 10000)
+
+Result =+(#C4, #C5)
+Result=Set(DIM='°')
+
+
+{$V <RaceDir>\CalFiles\ShiftLights_Settings.hed}
+
+[ShiftLights]
+IfExists(@Drive_RPM)
+C1=Const(0, 25)
+C1=If(@Drive_RPM, >, @LED1, 1, #C1)
+C1=If(@Drive_RPM, >, @LED2, 2, #C1)
+C1=If(@Drive_RPM, >, @LED3, 3, #C1)
+C1=If(@Drive_RPM, >, @LED4, 4, #C1)
+C1=If(@Drive_RPM, >, @LED5, 5, #C1)
+C1=If(@Drive_RPM, >, @LED6, 6, #C1)
+C1=If(@Drive_RPM, >, @LED7, 7, #C1)
+C1=If(@Drive_RPM, >, @LED8, 8, #C1)
+
+Result=Word(#C1,0,65535)
+Result=Set(Dim = '')
+

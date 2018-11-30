@@ -1,0 +1,11 @@
+;last modified 2017. 06. 23. 16:25:55 by Laci
+
+[HV Accumulator Cell Temperautre]
+
+HV_Cell_Temperature_S1M1T1 = If(#HV_Accumulator_Cell_ID, =, 0, 1, 0)
+HV_Cell_Temperature_S1M1T1 = FillFromBool(#HV Cell Temperature, #HV_Cell_Temperature_S1M1T1)
+HV_Cell_Temperature_S1M1T1 = Set(DIM, °C)
+
+HV_Cell_Temperature_S6M5T4 = If(#HV_Accumulator_Cell_ID, =, 0, 174, 0)
+HV_Cell_Temperature_S6M5T4 = FillFromBool(#HV Cell Temperature, #HV_Cell_Temperature_S1M1T1)
+HV_Cell_Temperature_S6M5T4 = Set(DIM, °C)

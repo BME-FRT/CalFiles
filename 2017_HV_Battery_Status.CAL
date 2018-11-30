@@ -1,0 +1,42 @@
+;last modified 9/22/2018 1:49:23 PM by Adam Krakkai
+
+[2017_HV_Battery_Status]
+
+HV_Voltage_Before_AIRs = And(#HV_Voltage_Before_&_After_AIRs, 0xFFFF0000)
+HV_Voltage_Before_AIRs = /(#HV_Voltage_Before_AIRs, 65536)
+HV_Voltage_Before_AIRs = /(#HV_Voltage_Before_AIRs, 10)
+HV_Voltage_Before_AIRs = Set(Dim='V')
+
+HV_Voltage_After_AIRs = And(#HV_Voltage_Before_&_After_AIRs, 0x0000FFFF)
+HV_Voltage_After_AIRs = /(#HV_Voltage_After_AIRs, 10)
+HV_Voltage_After_AIRs = Set(Dim='V')
+
+HV_Current_filtered = F(#HV_Current, F(AVG 15 Sec))
+
+Capacity = Integrate(#HV_Current)
+Capacity = /(#Capacity, 3.6)
+Capacity = Set(DIM, mAh)
+CapacityTotal = LastValue(#Capacity)
+CapacityTotal = Set(DIM, mAh)
+
+Electric_Power =  *(#HV_Voltage_Before_AIRs,#HV_Current)
+Electric_Power =  /(#Electric_Power, 1000)
+Electric_Power = Set(DIM, kW)
+
+;Electric Power for Rules compliant energy calculation
+Power_Regenerative_EM = *(#Electric_Power, 0.9)
+Electric_Power_EM = If(#Electric_Power, >=, 0, #Electric_Power, #Power_Regenerative_EM)
+
+
+Electric_Energy_EM= Integrate(#Electric_Power_EM)
+Electric_Energy_EM = /(#Electric_Energy_EM,3.6)
+Electric_Energy_EM = Set(DIM, Wh)
+Electric_Energy_EM_Total = LastValue(#Electric_Energy_EM)
+
+Electric_Energy= Integrate(#Electric_Power)
+Electric_Energy = /(#Electric_Energy,3.6)
+Electric_Energy = Set(DIM, Wh)
+Electric_Energy_Total = LastValue(#Electric_Energy)
+
+
+
