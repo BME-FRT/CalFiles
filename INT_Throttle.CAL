@@ -1,0 +1,8 @@
+;last modified 2018. 11. 30. 23:11:10 by Nándi
+
+[INT_Throttle]
+Throttle=+(#Throttle_Position_1,#Throttle_Position_2);
+Throttle=/(#Throttle,200);
+INT_Throttle=Integrate(#Throttle,0);
+INT_Throttle=Set(DIM='%');
+Delete(#Throttle);

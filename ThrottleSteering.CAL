@@ -1,0 +1,11 @@
+;last modified 2018. 12. 01. 1:28:26 by Nándi
+
+[ThrottleSteering]
+ThrottleSteering=+(#Throttle_Position_1,#Throttle_Position_2);
+ThrottleSteering=/(#ThrottleSteering,2);
+SteeringAngle=+(#Steering_Angle_1,#Steering_Angle_2);
+SteeringAngle=/(#SteeringAngle,2);
+ThrottleSteering=*(#ThrottleSteering,#SteeringAngle);
+ThrottleSteering=If(#SteeringAngle,>,30,#ThrottleSteering,0);
+Delete(#SteeringAngle);
+ThrottleSteering=Set(DIM='deg*%');

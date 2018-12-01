@@ -1,0 +1,11 @@
+;last modified 2018. 11. 30. 23:48:51 by Nándi
+
+[INT_Brake_Pressure_Front]
+ Brake_Pressure_Front_Corrected=+(#Brake_Pressure_Front,4.2);
+ INT_Brake_Pressure_Front=Integrate(#Brake_Pressure_Front_Corrected,0);
+ INT_Brake_Pressure_Front=Set(DIM='Bar');
+ 
+[INT_Brake_Pressure_Rear]
+ Brake_Pressure_Rear_Corrected=+(#Brake_Pressure_Rear,4.2);
+ INT_Brake_Pressure_Rear=Integrate(#Brake_Pressure_Rear_Corrected,0);
+ INT_Brake_Pressure_Rear=Set(DIM='Bar');
