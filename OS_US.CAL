@@ -1,0 +1,8 @@
+;last modified 2018. 12. 11. 18:38:09 by Nándi
+
+[OS_US]
+INT_OS_US=/(#Acceleration_Y_Front,#VehicleSpeed);
+INT_OS_US=-(#YawRate,#INT_OS_US);
+INT_OS_US=If(#VehicleSpeed,>,1,#INT_OS_US,0);
+INT_OS_US=Integrate(#INT_OS_US);
+INT_OS_US=Set(DIM='1/s2');

@@ -1,4 +1,4 @@
-;last modified 2018. 11. 30. 23:34:14 by Nándi
+;last modified 2018. 12. 10. 14:11:55 by Nándi
 
 [Variables]
 c2=(0.005254);                   // pi/30* R * 3.6/ Gear  ,R=0.223 m , Gear=16
@@ -7,42 +7,77 @@ c2=(0.005254);                   // pi/30* R * 3.6/ Gear  ,R=0.223 m , Gear=16
 
 IfExists(#AMK_Actualvelocity_1)
 WheelSpeed_1=*(#AMK_Actualvelocity_1,@c2)
-WheelSpeed_1=Word(#WheelSpeed_1,0,120)
+WheelSpeed_1=F(#WheelSpeed_1,F(AVG 20));
 WheelSpeed_1=Set(DIM='km/h');
 
 [WheelSpeed_2]
 
 IfExists(#AMK_Actualvelocity_2);
 WheelSpeed_2=*(#AMK_Actualvelocity_2,@c2)
-WheelSpeed_2=Word(#WheelSpeed_2,0,120)
+WheelSpeed_2=F(#WheelSpeed_2,F(AVG 20));
 WheelSpeed_2=Set(DIM='km/h');
 
 [WheelSpeed_3]
 
 IfExists(#AMK_Actualvelocity_3)
 WheelSpeed_3=*(#AMK_Actualvelocity_3,@c2)
-WheelSpeed_3=Word(#WheelSpeed_3,0,120)
+WheelSpeed_3=F(#WheelSpeed_3,F(AVG 20));
 WheelSpeed_3=Set(DIM='km/h');
 
 [WheelSpeed_4]
 
 IfExists(#AMK_Actualvelocity_4);
 WheelSpeed_4=*(#AMK_Actualvelocity_4,@c2);
-WheelSpeed_4=Word(#WheelSpeed_4,0,120);
+WheelSpeed_4=F(#WheelSpeed_4,F(AVG 20));
 WheelSpeed_4=Set(DIM='km/h');
 
 [VehicleSpeed]
-WSMax=Max(#WheelSpeed_1,#WheelSpeed_2);
-WSMax=Max(#WSMax,#WheelSpeed_3);
-WSMax=Max(#WSMax,#WheelSpeed_4);
 
-WSMin=Min(#WheelSpeed_1,#WheelSpeed_2);
-WSMin=Min(#WSMin,#WheelSpeed_3);
-WSMin=Min(#WSMin,#WheelSpeed_4);
+//kerekek gyorsításának vizsgálata, kipörgéseket így figyelmen kívül hagyhatjuk
+Accel1=Derivate(#WheelSpeed_1);
+Accel1=Abs(#Accel1);
+Accel1=F(#Accel1,F(Max 50));
 
+Accel2=Derivate(#WheelSpeed_2);
+Accel2=Abs(#Accel2);
+Accel2=F(#Accel2,F(Max 50));
 
-VehicleSpeed=If(#ACC_X,<,0,#WSMin,#WSMax);
-VehicleSpeed=F(#VehicleSpeed,F(AVG 10));
+Accel3=Derivate(#WheelSpeed_3);
+Accel3=Abs(#Accel3);
+Accel3=F(#Accel3,F(Max 50));
+
+Accel4=Derivate(#WheelSpeed_4);
+Accel4=Abs(#Accel4);
+Accel4=F(#Accel4,F(Max 50));
+
+//elpörgõ kerekek kizárása maximumnál
+WS1=If(#Accel1,>,15,0,#WheelSpeed_1);
+WS2=If(#Accel2,>,15,0,#WheelSpeed_2);
+WS3=If(#Accel3,>,15,0,#WheelSpeed_3);
+WS4=If(#Accel4,>,15,0,#WheelSpeed_4);
+WSMax=Max(#WS1,#WS2);
+WSMax=Max(#WSMax,#WS3);
+WSMax=Max(#WSMax,#WS4);
+
+//elpörgõ kerekek kizárása minimumnál
+WS1=If(#Accel1,>,15,120,#WheelSpeed_1);
+WS2=If(#Accel2,>,15,120,#WheelSpeed_2);
+WS3=If(#Accel3,>,15,120,#WheelSpeed_3);
+WS4=If(#Accel4,>,15,120,#WheelSpeed_4);
+WSMin=Min(#WS1,#WS2);
+WSMin=Min(#WSMin,#WS3);
+WSMin=Min(#WSMin,#WS4);
+
+VehicleSpeed=If(#Acceleration_X_Front_Filtered,>,0,#WSMin,#WSMax);
+VehicleSpeed=F(#VehicleSpeed,F(AVG 100));
+VehicleSpeed=Set(DIM='km/h')
 Delete(#WSMax);
 Delete(#WSMin);
-Delete(#VehicleSpeed0);
+Delete(#WS1);
+Delete(#WS2);
+Delete(#WS3);
+Delete(#WS4);
+Delete(#Accel1);
+Delete(#Accel2);
+Delete(#Accel3);
+Delete(#Accel4);
