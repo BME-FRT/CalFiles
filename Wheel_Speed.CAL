@@ -1,4 +1,4 @@
-;last modified 2018. 12. 10. 14:11:55 by Nándi
+;last modified 2018. 12. 16. 15:30:30 by Nándi
 
 [Variables]
 c2=(0.005254);                   // pi/30* R * 3.6/ Gear  ,R=0.223 m , Gear=16
@@ -51,19 +51,19 @@ Accel4=Abs(#Accel4);
 Accel4=F(#Accel4,F(Max 50));
 
 //elpörgõ kerekek kizárása maximumnál
-WS1=If(#Accel1,>,15,0,#WheelSpeed_1);
-WS2=If(#Accel2,>,15,0,#WheelSpeed_2);
-WS3=If(#Accel3,>,15,0,#WheelSpeed_3);
-WS4=If(#Accel4,>,15,0,#WheelSpeed_4);
+WS1=If(#Accel1,>,20,0,#WheelSpeed_1);
+WS2=If(#Accel2,>,20,0,#WheelSpeed_2);
+WS3=If(#Accel3,>,20,0,#WheelSpeed_3);
+WS4=If(#Accel4,>,20,0,#WheelSpeed_4);
 WSMax=Max(#WS1,#WS2);
 WSMax=Max(#WSMax,#WS3);
 WSMax=Max(#WSMax,#WS4);
 
 //elpörgõ kerekek kizárása minimumnál
-WS1=If(#Accel1,>,15,120,#WheelSpeed_1);
-WS2=If(#Accel2,>,15,120,#WheelSpeed_2);
-WS3=If(#Accel3,>,15,120,#WheelSpeed_3);
-WS4=If(#Accel4,>,15,120,#WheelSpeed_4);
+WS1=If(#Accel1,>,20,120,#WheelSpeed_1);
+WS2=If(#Accel2,>,20,120,#WheelSpeed_2);
+WS3=If(#Accel3,>,20,120,#WheelSpeed_3);
+WS4=If(#Accel4,>,20,120,#WheelSpeed_4);
 WSMin=Min(#WS1,#WS2);
 WSMin=Min(#WSMin,#WS3);
 WSMin=Min(#WSMin,#WS4);
@@ -81,3 +81,5 @@ Delete(#Accel1);
 Delete(#Accel2);
 Delete(#Accel3);
 Delete(#Accel4);
+
+AMK_RPM_average=/(#AMK_ActualVelocity,4);

@@ -1,4 +1,4 @@
-;last modified 11/30/2018 3:57:06 PM by erosdi
+;last modified 2018. 12. 12. 1:43:05 by Nándi
 
 [2017_Sensorbox_Rear]
 
@@ -20,7 +20,7 @@ Acceleration_X_Rearhb =*(#Acceleration_X_Rearhb,256)
 Acceleration_X_Rear =+(#Acceleration_X_Rearlb,#Acceleration_X_Rearhb)
 Acceleration_X_Rear =-(#Acceleration_X_Rear, 0x8000)
 Acceleration_X_Rear = *(#Acceleration_X_Rear, 0.0001274)
-Acceleration_X_Rear = *(#Acceleration_X_Rear,-1)
+Acceleration_X_Rear = *(#Acceleration_X_Rear,-1)              //fordítva beszerelve
 Acceleration_X_Rear =Set(DIM = g)
 
 
@@ -42,7 +42,8 @@ Acceleration_Y_Rearhb=*(#Acceleration_Y_Rearhb, 256)
 Acceleration_Y_Rear=+(#Acceleration_Y_Rearhb,#Acceleration_Y_Rearlb)
 Acceleration_Y_Rear=-(#Acceleration_Y_Rear, 0x8000)
 Acceleration_Y_Rear= *(#Acceleration_Y_Rear, 0.0001274)
-Acceleration_Y_Rear= Set(DIM = g)
+Acceleration_Y_Rear = *(#Acceleration_Y_Rear,-1)
+Acceleration_Y_Rear= Set(DIM = g)                               //fordítva beszerelve
 
 Acceleration_Z_Rearlb= And(#ACCEL3_REAR_2_32BIT, 0xFF000000)   ;maszkoljuk
 Acceleration_Z_Rearlb=/(#Acceleration_Z_Rearlb,16777216)
