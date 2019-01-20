@@ -1,8 +1,15 @@
-;last modified 2018. 11. 30. 23:11:10 by Nándi
+;last modified 2019. 01. 20. 14:59:10 by Nándi
 
 [INT_Throttle]
 Throttle=+(#Throttle_Position_1,#Throttle_Position_2);
 Throttle=/(#Throttle,200);
 INT_Throttle=Integrate(#Throttle,0);
-INT_Throttle=Set(DIM='%');
+INT_Throttle=Set(DIM='-');
 Delete(#Throttle);
+
+[INT_BrakePos]
+BrakePos=+(#Brake_Position_1,#Brake_Position_2);
+BrakePos=/(#BrakePos,200);
+INT_BrakePos=Integrate(#BrakePos,0);
+INT_BrakePos=Set(DIM='-');
+Delete(#BrakePos);

@@ -1,4 +1,4 @@
-;last modified 11/30/2018 3:55:28 PM by erosdi
+;last modified 2019. 01. 19. 15:50:17 by Nándi
 
 [Damper]
 Damper_travel_FL=*(#Wheel_Travel_FL,-0.018310)
@@ -16,23 +16,35 @@ Damper_Travel_FR=F(#Damper_Travel_FR, F(AVG 0.5 Sec))
 Damper_Travel_RL=F(#Damper_Travel_RL, F(AVG 0.5 Sec))
 Damper_Travel_RR=F(#Damper_Travel_RR, F(AVG 0.5 Sec))
 
+Damper_Travel_FL=Set(DIM='mm');
+Damper_Travel_FR=Set(DIM='mm');
+Damper_Travel_RL=Set(DIM='mm');
+Damper_Travel_RR=Set(DIM='mm');
+
 Ride_Height_Front=+(#Damper_Travel_FL,#Damper_Travel_FR)
 Ride_Height_Front=/(#Ride_Height_Front,2)
 Ride_Height_Front=+(#Ride_Height_Front,35)
+Ride_Height_Front=Set(DIM='mm');
 
 Ride_Height_Rear=+(#Damper_Travel_RL,#Damper_Travel_RR)
 Ride_Height_Rear=/(#Ride_Height_Rear,2)
 Ride_Height_Rear=+(#Ride_Height_Rear,35)
+Ride_Height_Rear=Set(DIM='mm');
 
 Roll_Angle_Front=-(#Damper_Travel_FL,#Damper_Travel_FR)
 Roll_Angle_Front=/(#Roll_Angle_Front,1200)
 Roll_Angle_Front=ArcSin(#Roll_Angle_Front)
 Roll_Angle_Front=*(#Roll_Angle_Front,57.29)
+Roll_Angle_Front=Set(DIM='°');
 
 Roll_Angle_Rear=-(#Damper_Travel_RR,#Damper_Travel_RL)
 Roll_Angle_Rear=/(#Roll_Angle_Rear,1160)
 Roll_Angle_Rear=ArcSin(#Roll_Angle_Rear)
 Roll_Angle_Rear=*(#Roll_Angle_Rear,57.29)
+Roll_Angle_Rear=Set(DIM='°');
+
+Roll_Angle=+(#Roll_Angle_Front,#Roll_Angle_Rear);
+Roll_Angle=/(#Roll_Angle,2);
 
 AccX2=*(#Acceleration_X_Rear_Filtered,#Acceleration_X_Rear_Filtered)
 AccX2=*(#AccX2,96.04)
