@@ -1,4 +1,4 @@
-;last modified 2019. 01. 20. 14:46:10 by Nándi
+;last modified 2019. 03. 31. 16:47:53 by bekes    (18)
 
 [INT_Brake_Pressure_Front]
 //calculating the zero error of the sensor. Integral of error:
@@ -13,6 +13,7 @@
  brake_front=/(#brake_front,#no_brake);
  correct0=LastValue(#brake_front,200);
  Brake_Pressure_Front_Corrected=-(#Brake_Pressure_Front,#correct0);
+ 
  INT_Brake_Pressure_Front=Integrate(#Brake_Pressure_Front_Corrected,0);
  INT_Brake_Pressure_Front=Set(DIM='Bar');
  Delete(#correction);
@@ -24,6 +25,7 @@
  brake_rear=/(#brake_rear,#no_brake);
  correct1=LastValue(#brake_rear,200);
  Brake_Pressure_Rear_Corrected=-(#Brake_Pressure_Rear,#correct1);
+ 
  INT_Brake_Pressure_Rear=Integrate(#Brake_Pressure_Rear_Corrected,0);
  INT_Brake_Pressure_Rear=Set(DIM='Bar');
  

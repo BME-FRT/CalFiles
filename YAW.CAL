@@ -1,0 +1,51 @@
+;last modified 2019. 03. 31. 17:17:30 by bekes    (7)
+
+
+[TurnRadius]
+TurnRadius=*(#VehicleSpeed,#VehicleSpeed);
+TurnRadius=/(#TurnRadius,12.96);
+AccYaverage=+(#Acceleration_Y_Front_Filtered,#Acceleration_Y_Front_Filtered);
+AccYaverage=*(#AccYaverage,4.905);           // Const=g/2
+TurnRadius=/(#TurnRadius,#AccYaverage);
+TurnRadius=Set(DIM='m');
+Wheel_Angle_Virtual=/(1.540,#TurnRadius);    // Wheel_Angle_Virtual=ArcTan(Wheelbase/TurnRadius)
+Wheel_Angle_Virtual=ArcTan(#Wheel_Angle_Virtual);
+Wheel_Angle_Virtual=*(#Wheel_Angle_Virtual,57.3);  //const=rad2deg
+Wheel_Angle_Virtual=If(#VehicleSpeed,<,5,#Wheel_Angle_Real,#Wheel_Angle_Virtual);
+Wheel_Angle_Virtual=Set(Dim='°');
+
+Wheel_Angle_Real=+(#Steering_Angle_1,#Steering_Angle_2);
+Wheel_Angle_Real=/(#Wheel_Angle_Real,7.1);    // Const=2*gear_ratio
+Handling=/(#Wheel_Angle_Virtual,#Wheel_Angle_Real);
+Handling=-(#Handling,1);
+Handling=If(#VehicleSpeed,>,5,#Handling,0)
+c1=Abs(#Wheel_Angle_Real);
+Handling=If(#c1,<,3,0,#Handling);
+Handling=Set(Dim='-');
+Delete(#AccYaverage);
+Delete(#c1);
+
+[YAW]
+Yaw=+(#Yaw_Rate_Front,#Yaw_Rate_Rear)
+Yaw=/(#Yaw,114.6);      //deg2rad/2
+Yaw=F(#Yaw,F(AVG 20));
+Mz_Real=Derivate(#Yaw);
+Mz_Real=*(#Mz_Real,120);       //const=moment of inertia on z-axis
+Mz_Real=Set(Dim='Nm');
+//E_Yaw=*(#Yaw,#Mz_Real);
+//E_Yaw=Integrate(#E_Yaw);
+//E_Yaw=Set(Dim='J');
+Delete(#Yaw);
+
+[Yaw calculated from torques at wheels]
+Mz_from_FL=*(#AMK_TorqueLimit_1,-42.29)   //const=Planetary_ratio*Track/2/R_wheel
+Mz_from_FR=*(#AMK_TorqueLimit_2,42.29)
+Mz_from_RL=*(#AMK_TorqueLimit_1,-42.29)
+Mz_from_RR=*(#AMK_TorqueLimit_1,42.29)
+Mz_from_Torques=+(#Mz_from_FL,#Mz_from_FR)
+Mz_from_Torques=+(#Mz_from_Torques,#Mz_from_RL)
+Mz_from_Torques=+(#Mz_from_Torques,#Mz_from_RR)
+Delete(#Mz_from_FL)
+Delete(#Mz_from_FR)
+Delete(#Mz_from_RL)
+Delete(#Mz_from_RR)

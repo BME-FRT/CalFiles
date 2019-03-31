@@ -1,4 +1,4 @@
-;last modified 2018. 12. 12. 1:43:05 by Nándi
+;last modified 2019. 03. 31. 10:32:18 by bekes    (52)
 
 [2017_Sensorbox_Rear]
 
@@ -31,7 +31,7 @@ Yaw_Rate_Rearhb= /(#Yaw_Rate_Rearhb,65536)
 Yaw_Rate_Rearhb=*(#Yaw_Rate_Rearhb,256)
 Yaw_Rate_Rear=+(#Yaw_Rate_Rearlb,#Yaw_Rate_Rearhb)
 Yaw_Rate_Rear=-(#Yaw_Rate_Rear,0x8000)
-Yaw_Rate_Rear=*(#Yaw_Rate_Rear,0.005)
+Yaw_Rate_Rear=*(#Yaw_Rate_Rear,-0.005)
 Yaw_Rate_Rear= Set(DIM = °/s)
 
 Acceleration_Y_Rearlb= And(#ACCEL1_REAR_2_32BIT, 0xFF000000)   ;maszkoljuk
@@ -42,8 +42,7 @@ Acceleration_Y_Rearhb=*(#Acceleration_Y_Rearhb, 256)
 Acceleration_Y_Rear=+(#Acceleration_Y_Rearhb,#Acceleration_Y_Rearlb)
 Acceleration_Y_Rear=-(#Acceleration_Y_Rear, 0x8000)
 Acceleration_Y_Rear= *(#Acceleration_Y_Rear, 0.0001274)
-Acceleration_Y_Rear = *(#Acceleration_Y_Rear,-1)
-Acceleration_Y_Rear= Set(DIM = g)                               //fordítva beszerelve
+Acceleration_Y_Rear= Set(DIM = g)
 
 Acceleration_Z_Rearlb= And(#ACCEL3_REAR_2_32BIT, 0xFF000000)   ;maszkoljuk
 Acceleration_Z_Rearlb=/(#Acceleration_Z_Rearlb,16777216)
@@ -59,7 +58,8 @@ Acceleration_Z_Rear= Set(DIM = g)
 Acceleration_X_Rear_Filtered=F(#Acceleration_X_Rear, F(AVG 0.5 Sec))
 Acceleration_Y_Rear_Filtered=F(#Acceleration_Y_Rear, F(AVG 0.5 Sec))
 Acceleration_Z_Rear_Filtered=F(#Acceleration_Z_Rear, F(AVG 0.5 Sec))
-Yaw_Rate_Filtered=F(#Yaw_Rate_Rear, F(AVG 0.5 Sec))
+Yaw_Rate_Filtered=F(#YawRate, F(AVG 0.5 Sec))
+Yaw_Rate_Filtered=*(#Yaw_Rate_Filtered,-1)
 
 
 Delete(#Yaw_Rate_Rearlb)

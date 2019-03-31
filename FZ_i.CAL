@@ -1,33 +1,31 @@
-;last modified 2018. 12. 07. 1:34:48 by Nándi
+;last modified 2019. 03. 29. 10:40:31 by bekes    (1)
 
 [FZ_i]
 var1 =/(#Acceleration_X_Front,1.540)
 var1 = *(#var1,-1)
 var2 =/(#Acceleration_Y_Front,1.200)
-Fz_1 =+(#var1,#var2)
+Fz_1 =-(#var1,#var2)
 Fz_1 =*(#Fz_1,794.610)
 Fz_1 =+(#Fz_1, 735.75)
 
 var3 =/(#Acceleration_X_Front,1.540)
-var3 = *(#var1,-1)
+var3 = *(#var3,-1)
 var4 =/(#Acceleration_Y_Front,1.200)
-Fz_2 =-(#var3,#var4)
+Fz_2 =+(#var3,#var4)
 Fz_2 =*(#Fz_2,794.610)
 Fz_2 =+(#Fz_2, 735.75)
 
 var5 =/(#Acceleration_X_Front,1.540)
-var5 = *(#var5,1)
 var6 =/(#Acceleration_Y_Front,1.200)
-Fz_3 =+(#var5,#var6)
+Fz_3 =-(#var5,#var6)
 Fz_3 =*(#Fz_3,794.610)
 Fz_3 =+(#Fz_3, 735.75)
 
 var7 =/(#Acceleration_X_Front,1.540)
-var7 = *(#var7,1)
 var8 =/(#Acceleration_Y_Front,1.200)
-Fz_4 =-(#var7,#var8)
-Fz_4 =*(#Fz_1,794.610)
-Fz_4 =+(#Fz_1, 735.75)
+Fz_4 =+(#var7,#var8)
+Fz_4 =*(#Fz_4,794.610)
+Fz_4 =+(#Fz_4, 735.75)
 
 Fz_1=Set(DIM='N');
 Fz_2=Set(DIM='N');

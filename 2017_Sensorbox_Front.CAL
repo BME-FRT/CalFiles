@@ -1,4 +1,4 @@
-;last modified 11/30/2018 3:57:05 PM by erosdi
+;last modified 2019. 03. 31. 11:30:09 by bekes    (25)
 
 [2017_Sensorbox_Front]
 
@@ -41,7 +41,7 @@ Acceleration_Y_Fronthb=/(#Acceleration_Y_Fronthb, 65536)
 Acceleration_Y_Fronthb=*(#Acceleration_Y_Fronthb, 256)
 Acceleration_Y_Front=+(#Acceleration_Y_Fronthb,#Acceleration_Y_Frontlb)
 Acceleration_Y_Front=-(#Acceleration_Y_Front, 0x8000)
-Acceleration_Y_Front= *(#Acceleration_Y_Front, 0.0001274)
+Acceleration_Y_Front= *(#Acceleration_Y_Front, -0.0001274)
 Acceleration_Y_Front= Set(DIM = g)
 
 Acceleration_Z_Frontlb= And(#ACCEL3_2_32BIT, 0xFF000000)   ;maszkoljuk

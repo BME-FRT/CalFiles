@@ -1,12 +1,12 @@
-;last modified 2018. 12. 17. 16:09:51 by Nándi
+;last modified 2019. 03. 28. 21:52:58 by bekes    (19)
 
 [HV Accumulator ECU 2017]
 
-HV_Voltage_After_AIR = *(#HV_Voltage_Before_&_After_AIRs_32BIT, 10)
+HV_Voltage_After_AIR = *(#HV_Voltage_Before_&_After_AIRs, 10)
 HV_Voltage_After_AIR = Mod(#HV_Voltage_After_Air,65536)
 HV_Voltage_After_AIR = *(#HV_Voltage_After_Air,0.01)
 
-HV_Voltage_Before_AIR = *(#HV_Voltage_Before_&_After_AIRs_32BIT, 10)
+HV_Voltage_Before_AIR = *(#HV_Voltage_Before_&_After_AIRs, 10)
 HV_Voltage_Before_AIR = /(#HV_Voltage_Before_AIR, 65536)
 HV_Voltage_Before_AIR = *(#HV_Voltage_Before_AIR, 0.01)
 

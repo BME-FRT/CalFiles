@@ -1,4 +1,4 @@
-;last modified 2019. 01. 19. 15:50:17 by Nándi
+;last modified 2019. 03. 31. 19:01:21 by bekes    (56)
 
 [Damper]
 Damper_travel_FL=*(#Wheel_Travel_FL,-0.018310)
@@ -8,18 +8,28 @@ Damper_travel_RR=*(#Wheel_Travel_RR,-0.018310)
 
 Damper_travel_FL=+(#Damper_travel_FL,42.18)
 Damper_travel_FR=+(#Damper_travel_FR,40.36)
-Damper_travel_RL=+(#Damper_travel_RL,43)
+Damper_travel_RL=+(#Damper_travel_RL,56.3)
 Damper_travel_RR=+(#Damper_travel_RR,31.1)
 
-Damper_Travel_FL=F(#Damper_Travel_FL, F(AVG 0.5 Sec))
-Damper_Travel_FR=F(#Damper_Travel_FR, F(AVG 0.5 Sec))
-Damper_Travel_RL=F(#Damper_Travel_RL, F(AVG 0.5 Sec))
-Damper_Travel_RR=F(#Damper_Travel_RR, F(AVG 0.5 Sec))
+Damper_Travel_FL=F(#Damper_Travel_FL, F(AVG 0.25 Sec))
+Damper_Travel_FR=F(#Damper_Travel_FR, F(AVG 0.25 Sec))
+Damper_Travel_RL=F(#Damper_Travel_RL, F(AVG 0.25 Sec))
+Damper_Travel_RR=F(#Damper_Travel_RR, F(AVG 0.25 Sec))
 
 Damper_Travel_FL=Set(DIM='mm');
 Damper_Travel_FR=Set(DIM='mm');
 Damper_Travel_RL=Set(DIM='mm');
 Damper_Travel_RR=Set(DIM='mm');
+
+//!!!!!!!!!!!!!!!!!!!!!
+//!!!!!!!!!!!!!!!!!!!!!
+//RL And RR were exchanged in 2018
+//kókányolás is on:
+tmp=+(#Damper_Travel_RR,0);
+Damper_Travel_RR=+(#Damper_Travel_RL,0);
+Damper_Travel_RL=+(#tmp,0);
+Delete(#tmp);
+//this should be deleted If the change is fixed
 
 Ride_Height_Front=+(#Damper_Travel_FL,#Damper_Travel_FR)
 Ride_Height_Front=/(#Ride_Height_Front,2)

@@ -1,4 +1,4 @@
-;last modified 11/25/2018 1:22:53 AM by erosdi
+;last modified 2019. 03. 29. 10:25:58 by bekes    (31)
 
 [2018_AMK]
 
@@ -47,6 +47,8 @@ V_RPM=Set(Dim="km/h")
 
 Acc_Y_Filtered=F(#ACC_Y, F(AVG 0.5 Sec))
 Acc_X_Filtered=F(#ACC_X, F(AVG 0.5 Sec))
+Acc_X_Filtered=*(#Acc_X_Filtered,-1);
+Acc_Y_Filtered=*(#Acc_Y_Filtered,-1);
 
 
 
