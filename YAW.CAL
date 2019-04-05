@@ -1,4 +1,4 @@
-;last modified 2019. 03. 31. 17:17:30 by bekes    (7)
+;last modified 2019. 04. 05. 22:09:01 by bekes    (28)
 
 
 [TurnRadius]
@@ -8,14 +8,16 @@ AccYaverage=+(#Acceleration_Y_Front_Filtered,#Acceleration_Y_Front_Filtered);
 AccYaverage=*(#AccYaverage,4.905);           // Const=g/2
 TurnRadius=/(#TurnRadius,#AccYaverage);
 TurnRadius=Set(DIM='m');
+
+Wheel_Angle_Real=+(#Steering_Angle_1,#Steering_Angle_2);
+Wheel_Angle_Real=/(#Wheel_Angle_Real,7.1);    // Const=2*gear_ratio
+
 Wheel_Angle_Virtual=/(1.540,#TurnRadius);    // Wheel_Angle_Virtual=ArcTan(Wheelbase/TurnRadius)
 Wheel_Angle_Virtual=ArcTan(#Wheel_Angle_Virtual);
 Wheel_Angle_Virtual=*(#Wheel_Angle_Virtual,57.3);  //const=rad2deg
 Wheel_Angle_Virtual=If(#VehicleSpeed,<,5,#Wheel_Angle_Real,#Wheel_Angle_Virtual);
 Wheel_Angle_Virtual=Set(Dim='°');
 
-Wheel_Angle_Real=+(#Steering_Angle_1,#Steering_Angle_2);
-Wheel_Angle_Real=/(#Wheel_Angle_Real,7.1);    // Const=2*gear_ratio
 Handling=/(#Wheel_Angle_Virtual,#Wheel_Angle_Real);
 Handling=-(#Handling,1);
 Handling=If(#VehicleSpeed,>,5,#Handling,0)
