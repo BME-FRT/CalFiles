@@ -1,12 +1,28 @@
-;last modified 2019. 03. 29. 10:40:31 by bekes    (1)
+;last modified 2019. 04. 06. 16:41:40 by bekes    (40)
 
 [FZ_i]
+F_aero_down=Power(#VehicleSpeed,2)
+F_aero_down=*(#F_aero_down,0.07625) //const=0.5*air_density*area*c_lift/3.6^2
+F_aero_drag=*(#F_aero_down,0.061)   //const=0.5*air_density*area*c_drag/3.6^2
+Delta_drag=*(#F_aero_drag,0.0876)   // 0.5*h_CoP/Wheelbase
+
+F_aero_front=*(#F_aero_down,0.25)   // 0,5*bias
+F_aero_front=-(#F_aero_front,#Delta_drag)
+
+F_aero_rear=*(#F_aero_down,0.25)    // 0,5*bias
+F_aero_rear=+(#F_aero_rear,#Delta_drag)
+
+Delete(#Delta_drag)
+//Delete(#F_aero_down)
+Delete(#F_aero_drag)
+
 var1 =/(#Acceleration_X_Front,1.540)
 var1 = *(#var1,-1)
 var2 =/(#Acceleration_Y_Front,1.200)
 Fz_1 =-(#var1,#var2)
 Fz_1 =*(#Fz_1,794.610)
 Fz_1 =+(#Fz_1, 735.75)
+Fz_1=+(#F_aero_front,#Fz_1)
 
 var3 =/(#Acceleration_X_Front,1.540)
 var3 = *(#var3,-1)
@@ -14,18 +30,26 @@ var4 =/(#Acceleration_Y_Front,1.200)
 Fz_2 =+(#var3,#var4)
 Fz_2 =*(#Fz_2,794.610)
 Fz_2 =+(#Fz_2, 735.75)
+Fz_2=+(#F_aero_front,#Fz_2)
 
 var5 =/(#Acceleration_X_Front,1.540)
 var6 =/(#Acceleration_Y_Front,1.200)
 Fz_3 =-(#var5,#var6)
 Fz_3 =*(#Fz_3,794.610)
 Fz_3 =+(#Fz_3, 735.75)
+Fz_3=+(#F_aero_rear,#Fz_3)
 
 var7 =/(#Acceleration_X_Front,1.540)
 var8 =/(#Acceleration_Y_Front,1.200)
 Fz_4 =+(#var7,#var8)
 Fz_4 =*(#Fz_4,794.610)
 Fz_4 =+(#Fz_4, 735.75)
+Fz_4=+(#F_aero_rear,#Fz_4)
+
+Fz_1=F(#Fz_1,F(AVG 20))
+Fz_2=F(#Fz_2,F(AVG 20))
+Fz_3=F(#Fz_3,F(AVG 20))
+Fz_4=F(#Fz_4,F(AVG 20))
 
 Fz_1=Set(DIM='N');
 Fz_2=Set(DIM='N');

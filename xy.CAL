@@ -1,0 +1,25 @@
+;last modified 2019. 04. 28. 20:14:34 by bekes    (5)
+
+[xy]
+
+long_rad=/(#Longitude,57.296)
+lat_rad=/(#Latitude,57.296)
+delta_longitude=MaxValue(#long_rad)
+delta_longitude=-(#long_rad,#delta_longitude)
+delta_latitude=MaxValue(#lat_rad)
+delta_latitude=-(#lat_rad,#delta_latitude)
+
+x=Cos(#lat_rad)
+x=*(#x,#delta_longitude)
+x=Tan(#x)
+x=*(#x,6371000)
+x=Set(Dim='m')
+
+y=Tan(#delta_latitude)
+y=*(#y,6371000)
+y=Set(Dim='m')
+
+Delete(#delta_latitude)
+Delete(#delta_longitude)
+Delete(#long_rad)
+Delete(#lat_rad)
