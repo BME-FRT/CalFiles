@@ -1,4 +1,4 @@
-;last modified 2019. 01. 20. 15:16:22 by Nándi
+;last modified 2019. 05. 17. 14:58:56 by bekes    (96)
 
 
 [Variables]
@@ -75,6 +75,15 @@ P_motor_4=*(#P_motor_4,@Pi);
 P_motor_4=/(#P_motor_4,30);
 E_motor_4=Integrate(#P_motor_4);
 
+P_motor_1=/(#P_motor_1,1000)
+P_motor_1=Set(Dim='kw')
+P_motor_2=/(#P_motor_2,1000)
+P_motor_2=Set(Dim='kw')
+P_motor_3=/(#P_motor_3,1000)
+P_motor_3=Set(Dim='kw')
+P_motor_4=/(#P_motor_4,1000)
+P_motor_4=Set(Dim='kw')
+
 E_motors=+(#E_motor_1,#E_motor_2);
 E_motors=+(#E_motors,#E_motor_3);
 E_motors=+(#E_motors,#E_motor_4);
@@ -84,8 +93,15 @@ Motor_Efficiency=+(#P_motor_1,#P_motor_2);
 Motor_Efficiency=+(#Motor_Efficiency,#P_motor_3);
 Motor_Efficiency=+(#Motor_Efficiency,#P_motor_4);
 Motor_Efficiency=/(#Motor_Efficiency,#Power_Electric);
-Motor_Efficiency=/(#Motor_Efficiency,10);
 Motor_Efficiency=Set(DIM='-');
+
+P_Lost=-(#Power_Electric,#P_motor_1);
+P_Lost=-(#P_Lost,#P_motor_2);
+P_Lost=-(#P_Lost,#P_motor_3);
+P_Lost=-(#P_Lost,#P_motor_4);
+
+U_ind_1=*(#AMK_Actualvelocity_1,0.0266) //const=ke*sqrt(2)/1000
+U_ind_3=*(#AMK_Actualvelocity_3,0.0266)
 
 [mAh]
 INT_HV_current_Pos=If(#HV_Current,>,0,#HV_Current,0);

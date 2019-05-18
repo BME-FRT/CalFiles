@@ -1,4 +1,4 @@
-;last modified 2019. 03. 31. 19:01:21 by bekes    (56)
+;last modified 2019. 05. 10. 4:13:30 by bekes    (34)
 
 [Damper]
 Damper_travel_FL=*(#Wheel_Travel_FL,-0.018310)
@@ -8,8 +8,8 @@ Damper_travel_RR=*(#Wheel_Travel_RR,-0.018310)
 
 Damper_travel_FL=+(#Damper_travel_FL,42.18)
 Damper_travel_FR=+(#Damper_travel_FR,40.36)
-Damper_travel_RL=+(#Damper_travel_RL,56.3)
-Damper_travel_RR=+(#Damper_travel_RR,31.1)
+Damper_travel_RL=+(#Damper_travel_RL,40.8)
+Damper_travel_RR=+(#Damper_travel_RR,27.8)
 
 Damper_Travel_FL=F(#Damper_Travel_FL, F(AVG 0.25 Sec))
 Damper_Travel_FR=F(#Damper_Travel_FR, F(AVG 0.25 Sec))
@@ -47,7 +47,7 @@ Roll_Angle_Front=ArcSin(#Roll_Angle_Front)
 Roll_Angle_Front=*(#Roll_Angle_Front,57.29)
 Roll_Angle_Front=Set(DIM='°');
 
-Roll_Angle_Rear=-(#Damper_Travel_RR,#Damper_Travel_RL)
+Roll_Angle_Rear=-(#Damper_Travel_RL,#Damper_Travel_RR)
 Roll_Angle_Rear=/(#Roll_Angle_Rear,1160)
 Roll_Angle_Rear=ArcSin(#Roll_Angle_Rear)
 Roll_Angle_Rear=*(#Roll_Angle_Rear,57.29)

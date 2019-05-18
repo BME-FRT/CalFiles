@@ -1,0 +1,9 @@
+;last modified 2019. 05. 17. 0:47:07 by bekes    (1)
+
+[Lap]
+Lap=If(#AMK_Actualvelocity_1,>,-2000,1,0)
+Lap=Integrate(#Lap,0)
+Lap=Derivate(#Lap)
+Lap=If(#Lap,<,0,200,0)
+Lap=Integrate(#Lap)
+Lap=Set(Dim='-')
