@@ -1,4 +1,8 @@
-;last modified 2019. 04. 28. 20:14:34 by bekes    (5)
+;last modified 2019. 06. 09. 0:29:05 by bekes    (17)
+
+[AMK_Torque_estimated]
+
+AMK_Torque_estimated=*(#AMK_TorqueLimit,#Motor_Efficiency);
 
 [xy]
 
@@ -23,3 +27,16 @@ Delete(#delta_latitude)
 Delete(#delta_longitude)
 Delete(#long_rad)
 Delete(#lat_rad)
+
+[Lap]
+Lap=If(#AMK_Actualvelocity_1,>,-2000,1,0)
+Lap=Integrate(#Lap,0)
+Lap=Derivate(#Lap)
+Lap=If(#Lap,<,0,200,0)
+Lap=Integrate(#Lap)
+Lap=Set(Dim='-')
+
+[Dist]
+
+Dist=Integrate(#VehicleSpeed);
+Dist=Set(DIM='m');

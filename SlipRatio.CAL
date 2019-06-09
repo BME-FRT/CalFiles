@@ -1,7 +1,7 @@
-;last modified 2018. 12. 07. 10:55:47 by Nándi
+;last modified 2019. 06. 09. 0:42:43 by bekes    (85)
 
 
-//gyosításnál
+//accelerating
 [SlipRatio_1_Traction]
 IfExists(#WheelSpeed_1)
 SlipRatio_1_Traction=If(#WheelSpeed_1,>,#VehicleSpeed,#VehicleSpeed,#WheelSpeed_1)
@@ -35,7 +35,7 @@ SlipRatio_4_Traction=Word(#SlipRatio_4_Traction,0,2);
 SlipRatio_4_Traction=Set(Dim='-');
 
 
-//fékezésnél
+//decelerating
 [SlipRatio_1_Braking]
 IfExists(#WheelSpeed_1)
 SlipRatio_1_Braking=If(#WheelSpeed_1,<,#VehicleSpeed,#VehicleSpeed,#WheelSpeed_1)

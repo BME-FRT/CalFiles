@@ -1,6 +1,0 @@
-;last modified 2018. 12. 16. 15:40:55 by Nándi
-
-[AMK_Torque_estimated]
-
-AMK_Torque_estimated=*(#AMK_TorqueLimit,#Motor_Efficiency);
-

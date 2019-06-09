@@ -1,6 +1,6 @@
-;last modified 10/28/2018 2:15:05 PM by erosdi
+;last modified 2019. 06. 08. 23:23:50 by bekes    (13)
 
-[2017_Throttle_&_Steering]
+[2019_Throttle_&_Steering]
 
 Throttle_Plausibility = And(#Throttle_Steering_1_32BIT, 0x80000000)
 Throttle_Plausibility = /(#Throttle_Plausibility, 2147483648)
@@ -24,14 +24,12 @@ Steering_Angle_Plausibility = Set(DIM = bool)
 Steering_Angle_1 = And(#Throttle_Steering_2_32BIT, 0x0FFF0000)
 Steering_Angle_1 = /(#Steering_Angle_1, 65536)
 Steering_Angle_1 = -(#Steering_Angle_1, 90)
-;Steering_Angle_1 = /(#Steering_Angle_1, 10)
 Steering_Angle_1 = Set(DIM = °)
 Steering_Angle_Derivate_1 = Derivate(#Steering_Angle_1)
 
 Steering_Angle_2 = And(#Throttle_Steering_2_32BIT, 0x00000FFF)
 Steering_Angle_2 = *(#Steering_Angle_2, -1)
 Steering_Angle_2 = +(#Steering_Angle_2, 90)
-;Steering_Angle_2 = /(#Steering_Angle_2, 10)
 Steering_Angle_2 = Set(DIM = °)
 Steering_Angle_Derivate_2 = Derivate(#Steering_Angle_2)
 

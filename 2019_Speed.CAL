@@ -1,4 +1,4 @@
-;last modified 2019. 03. 28. 22:10:37 by bekes    (63)
+;last modified 2019. 06. 08. 23:28:07 by bekes    (63)
 
 [Variables]
 c2=(0.005254);                   // pi/30* R * 3.6/ Gear  ,R=0.223 m , Gear=16
@@ -68,7 +68,7 @@ WSMin=Min(#WS1,#WS2);
 WSMin=Min(#WSMin,#WS3);
 WSMin=Min(#WSMin,#WS4);
 
-VehicleSpeed=If(#Acceleration_X_Front_Filtered,>,0,#WSMin,#WSMax);
+VehicleSpeed=If(#Acceleration_X_Rear_Filtered,>,0,#WSMin,#WSMax);
 VehicleSpeed=F(#VehicleSpeed,F(AVG 100));
 VehicleSpeed=Set(DIM='km/h')
 Delete(#WSMax);
@@ -84,3 +84,5 @@ Delete(#Accel4);
 Delete(#checkSpeed);
 
 AMK_RPM_average=/(#AMK_ActualVelocity,4);
+
+

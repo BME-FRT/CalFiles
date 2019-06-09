@@ -1,4 +1,4 @@
-;last modified 2019. 03. 31. 11:30:09 by bekes    (25)
+;last modified 2019. 06. 02. 12:19:59 by bekes    (40)
 
 [2017_Sensorbox_Front]
 
@@ -34,9 +34,9 @@ Yaw_Rate_Front=-(#Yaw_Rate_Front,0x8000)
 Yaw_Rate_Front=*(#Yaw_Rate_Front,0.005)
 Yaw_Rate_Front= Set(DIM = °/s)
 
-Acceleration_Y_Frontlb= And(#ACCEL1_2_32_BIT, 0xFF000000)   ;maszkoljuk
+Acceleration_Y_Frontlb= And(#ACCEL1_2_32BIT, 0xFF000000)   ;maszkoljuk
 Acceleration_Y_Frontlb=/(#Acceleration_Y_Frontlb,16777216)
-Acceleration_Y_Fronthb=And(#ACCEL1_2_32_BIT, 0x00FF0000)
+Acceleration_Y_Fronthb=And(#ACCEL1_2_32BIT, 0x00FF0000)
 Acceleration_Y_Fronthb=/(#Acceleration_Y_Fronthb, 65536)
 Acceleration_Y_Fronthb=*(#Acceleration_Y_Fronthb, 256)
 Acceleration_Y_Front=+(#Acceleration_Y_Fronthb,#Acceleration_Y_Frontlb)

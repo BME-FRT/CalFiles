@@ -1,35 +1,25 @@
-;last modified 2019. 05. 10. 4:13:30 by bekes    (34)
+;last modified 2019. 06. 09. 21:12:45 by bekes    (1)
 
 [Damper]
-Damper_travel_FL=*(#Wheel_Travel_FL,-0.018310)
-Damper_travel_FR=*(#Wheel_Travel_FR,-0.018310)
-Damper_travel_RL=*(#Wheel_Travel_RL,-0.018310)
-Damper_travel_RR=*(#Wheel_Travel_RR,-0.018310)
+//Damper_travel_FL=*(#Wheel_Travel_FL,-0.018310)
+//Damper_travel_FR=*(#Wheel_Travel_FR,-0.018310)
+//Damper_travel_RL=*(#Wheel_Travel_RL,-0.018310)
+//Damper_travel_RR=*(#Wheel_Travel_RR,-0.018310)
 
-Damper_travel_FL=+(#Damper_travel_FL,42.18)
-Damper_travel_FR=+(#Damper_travel_FR,40.36)
-Damper_travel_RL=+(#Damper_travel_RL,40.8)
-Damper_travel_RR=+(#Damper_travel_RR,27.8)
+//Damper_travel_FL=+(#Damper_travel_FL,42.18)
+//Damper_travel_FR=+(#Damper_travel_FR,40.36)
+//Damper_travel_RL=+(#Damper_travel_RL,40.8)
+//Damper_travel_RR=+(#Damper_travel_RR,27.8)
 
-Damper_Travel_FL=F(#Damper_Travel_FL, F(AVG 0.25 Sec))
-Damper_Travel_FR=F(#Damper_Travel_FR, F(AVG 0.25 Sec))
-Damper_Travel_RL=F(#Damper_Travel_RL, F(AVG 0.25 Sec))
-Damper_Travel_RR=F(#Damper_Travel_RR, F(AVG 0.25 Sec))
+Damper_Travel_FL=F(#Wheel_Travel_FL, F(AVG 0.25 Sec))
+Damper_Travel_FR=F(#Wheel_Travel_FR, F(AVG 0.25 Sec))
+Damper_Travel_RL=F(#Wheel_Travel_RL, F(AVG 0.25 Sec))
+Damper_Travel_RR=F(#Wheel_Travel_RR, F(AVG 0.25 Sec))
 
 Damper_Travel_FL=Set(DIM='mm');
 Damper_Travel_FR=Set(DIM='mm');
 Damper_Travel_RL=Set(DIM='mm');
 Damper_Travel_RR=Set(DIM='mm');
-
-//!!!!!!!!!!!!!!!!!!!!!
-//!!!!!!!!!!!!!!!!!!!!!
-//RL And RR were exchanged in 2018
-//kókányolás is on:
-tmp=+(#Damper_Travel_RR,0);
-Damper_Travel_RR=+(#Damper_Travel_RL,0);
-Damper_Travel_RL=+(#tmp,0);
-Delete(#tmp);
-//this should be deleted If the change is fixed
 
 Ride_Height_Front=+(#Damper_Travel_FL,#Damper_Travel_FR)
 Ride_Height_Front=/(#Ride_Height_Front,2)
@@ -40,6 +30,22 @@ Ride_Height_Rear=+(#Damper_Travel_RL,#Damper_Travel_RR)
 Ride_Height_Rear=/(#Ride_Height_Rear,2)
 Ride_Height_Rear=+(#Ride_Height_Rear,35)
 Ride_Height_Rear=Set(DIM='mm');
+
+[Damper_Velocity]
+Damper_Velocity_1=Derivate(#Damper_Travel_FL);
+Damper_Velocity_1=Set(DIM='mm/s');
+
+Damper_Velocity_2=Derivate(#Damper_Travel_FR);
+Damper_Velocity_2=Set(DIM='mm/s');
+
+Damper_Velocity_3=Derivate(#Damper_Travel_RL);
+Damper_Velocity_3=Set(DIM='mm/s');
+
+Damper_Velocity_4=Derivate(#Damper_Travel_RR);
+Damper_Velocity_4=Set(DIM='mm/s');
+
+
+[Roll]
 
 Roll_Angle_Front=-(#Damper_Travel_FL,#Damper_Travel_FR)
 Roll_Angle_Front=/(#Roll_Angle_Front,1200)
@@ -67,4 +73,13 @@ Roll=+(#AccX2,#AccZ2)
 Roll=SqRt(#Roll)
 Roll=ArcTan(#Roll)
 Roll=/(#Acceleration_Y_Rear_Filtered,#Roll)
+
+[Pitch]
+
+PitchAngle=-(#Ride_Height_Rear,#Ride_Height_Front);
+PitchAngle=/(#PitchAngle,1540);                    //const=wheelbase
+PitchAngle=ArcSin(#PitchAngle);
+PitchAngle=*(180,#PitchAngle);
+PitchAngle=/(#PitchAngle,@Pi);
+PitchAngle=Set(DIM='deg');
 
