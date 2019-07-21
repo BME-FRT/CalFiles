@@ -1,4 +1,4 @@
-;last modified 2019. 06. 02. 17:39:39 by bekes    (1)
+;last modified 2019. 07. 15. 16:29:01 by bekes    (45)
 
 [2017_Brake]
 
@@ -46,38 +46,38 @@ Brake_Pressure_Rear = Set(DIM = bar)
 [Brake_Force_Correction]
  //Calculating the zero error of brake force
  Brake_Force_corrected=-(#Brake_Force,64)
+ 
+[INT_Brake_for_testdata]
 
-[Front Correction]
-//calculating the zero error of the sensor. Integral of error:
- brake_front=If(#Brake_Force_corrected,>,10,0,#Brake_Pressure_Front);
- brake_front=If(#AMK_Actualvelocity_3,<,100,0,#brake_front);   //avoiding sensor errors when car is standing
- brake_front=Integrate(#brake_front);
- //time of error:
- no_brake=If(#Brake_Force_corrected,>,10,0,1);
- no_brake=If(#AMK_ActualVelocity_3,<,100,0,#no_brake);
- no_brake=Integrate(#no_brake);
- //average error:
- brake_front=/(#brake_front,#no_brake);
- correct0=LastValue(#brake_front,200);
- Brake_Pressure_Front_Corrected=-(#Brake_Pressure_Front,#correct0);
- 
- INT_Brake_Pressure_Front=Integrate(#Brake_Pressure_Front_Corrected);
+ INT_Brake_Pressure_Front=Integrate(#Brake_Pressure_Front);
  INT_Brake_Pressure_Front=Set(DIM='Bar');
- Delete(#correction);
  
-[Rear Correction]
- brake_rear=If(#Brake_Force_corrected,>,10,0,#Brake_Pressure_Rear);
- brake_rear=If(#AMK_ActualVelocity_3,<,100,0,#brake_rear);
- brake_rear=Integrate(#brake_rear);
- brake_rear=/(#brake_rear,#no_brake);
- correct1=LastValue(#brake_rear,200);
- Brake_Pressure_Rear_Corrected=-(#Brake_Pressure_Rear,#correct1);
- 
- INT_Brake_Pressure_Rear=Integrate(#Brake_Pressure_Rear_Corrected);
+ INT_Brake_Pressure_Rear=Integrate(#Brake_Pressure_Rear);
  INT_Brake_Pressure_Rear=Set(DIM='Bar');
  
- Delete(#brake_front)
- Delete(#brake_rear)
- Delete(#no_brake)
- Delete(#correct0)
- Delete(#correct1)
+[forces]
+ F_Brake_front=*(30.54,#Brake_Pressure_Front)
+ F_Brake_1=*(#AMK_TorqueLimitNegative_1,70.48)
+ F_Brake_1=-(#F_Brake_front,#F_Brake_1)
+ 
+ F_Brake_2=*(#AMK_TorqueLimitNegative_2,70.48)
+ F_Brake_2=-(#F_Brake_front,#F_Brake_2)
+ 
+ F_Brake_rear=*(30.54,#Brake_Pressure_Rear)
+ F_Brake_3=*(#AMK_TorqueLimitNegative_3,70.48)
+ F_Brake_3=-(#F_Brake_rear,#F_Brake_3)
+
+ F_Brake_4=*(#AMK_TorqueLimitNegative_4,70.48)
+ F_Brake_4=-(#F_Brake_rear,#F_Brake_4)
+ 
+ F_Brake_front=+(#F_Brake_1,#F_Brake_2)
+ F_Brake_rear=+(#F_Brake_3,#F_Brake_4)
+ 
+ F_Brake_1=Set(DIM='N')
+ F_Brake_2=Set(DIM='N')
+ F_Brake_3=Set(DIM='N')
+ F_Brake_4=Set(DIM='N')
+ F_Brake_front=Set(DIM='N')
+ F_Brake_rear=Set(DIM='N')
+
+
