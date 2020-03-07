@@ -1,4 +1,4 @@
-;last modified 2019. 06. 09. 21:44:19 by bekes    (100)
+;last modified 2020. 02. 29. 18:14:18 by bekes    (71)
 
 
 [Variables]
@@ -6,15 +6,30 @@ c1=0.03;                     //Rolling Resistance
 c2=0.836;         //drag coeff: 0,5*rho*Cd*A
 c3=0.001045;      //lift coeff: 0,5*rho*Cl*A/1000
 
+[Kinetic_Energy]
+VS=/(#VehicleSpeed,3.6)
+VS=Set(Dim='m/s')
+
+E_Kinetic=*(#VS,#VS)
+E_Kinetic=*(#E_Kinetic,0.15)             // *m/2/1000
+E_Kinetic=Set(DIM='kJ')
+
+//Energy used to speed up the vehicle
+P_Useful=Derivate(#E_Kinetic)
+P_Useful=If(#P_Useful,>,0,#P_Useful,0)
+E_Useful=Integrate(#P_Useful,0)
+P_Useful=Set(DIM='kW')
+E_Useful=Set(DIM='kJ')
 
 [Electric_Energy]
-P_Electric =  *(#HV_Voltage_Before_AIRs,#HV_Current)
+P_Electric =  *(#HV_Voltage_Before_AIR,#HV_Current)
 P_Electric =  /(#P_Electric, 10000)               // Current, Voltage values: /10, kJ
 P_Electric = Set(DIM, kW)
+P_Electric=If(#Throttle_Position_1,>,4,#P_Electric,0)
 
 E_Electric= Integrate(#P_Electric)
 Ppos=If(#P_Electric,>,0,#P_Electric,0)
-E_Electric_pos=Integrate(#Ppos)
+E_Electric_pos=Integrate(#Ppos,0)
 Delete(#Ppos)
 E_Electric=Set(Dim='kJ')
 E_Electric_pos=Set(Dim='kJ')
@@ -29,79 +44,73 @@ E_Electric_EM = Set(DIM, Wh)
 E_Electric_EM_Total = LastValue(#E_Electric_EM)
 Delete(#P_Regenerative_EM)
 
-
-
-[Kinetic_Energy]
-VS=/(#VehicleSpeed,3.6);
-VS=Set(Dim='m/s');
-
-Energy_Kinetic=*(#VS,#VS);
-Energy_Kinetic=*(#Energy_Kinetic,0.15);             // *m/2/1000
-Energy_Kinetic=Set(DIM='kJ');
-
-//Energy used to speed up the vehicle
-Energy_Useful=Derivate(#Energy_Kinetic);
-Energy_Useful=If(#Energy_Useful,>,0,#Energy_Useful,0);
-Energy_Useful=Integrate(#Energy_Useful);
-Energy_Useful=Set(DIM='kJ');
-
 [Rolling Resistance]
 
-P_downforce=*(@c3,#VS);
-P_downforce=*(#P_downforce,#VS);
+P_downforce=*(@c3,#VS)
+P_downforce=*(#P_downforce,#VS)
 P_downforce=*(#P_downforce,0.03);
 P_downforce=*(#P_downforce,#VS);
-E_RollRes=*(0.08829,#VS);
-E_RollRes=+(#E_RollRes,#P_downforce);
-E_RollRes=Integrate(#E_RollRes);
+P_RollRes=*(0.08829,#VS);
+P_RollRes=+(#P_RollRes,#P_downforce);
+P_RollRes=If(#Throttle_Position_1,>,4,#P_RollRes,0)            //Szucsnek
+E_RollRes=Integrate(#P_RollRes,0);
 E_RollRes=Set(Dim='kJ');
 Delete(#P_downforce);
 
 [Drag]
 
-P_Drag=*(#VS,@c2);
-P_Drag=*(#VS,#P_Drag);
-P_Drag=*(#VS,#P_Drag);
-P_Drag=/(#P_Drag,1000);
-P_Drag=Set(Dim='kW');
-Energy_Drag=Integrate(#P_Drag,0);
-Delete(#VS);
+P_Drag=*(#VS,@c2)
+P_Drag=If(#Throttle_Position_1,>,4,#P_Drag,0)                  //Szucsnek
+P_Drag=*(#VS,#P_Drag)
+P_Drag=*(#VS,#P_Drag)
+P_Drag=/(#P_Drag,1000)
+P_Drag=Set(Dim='kW')
+E_Drag=Integrate(#P_Drag,0)
+Delete(#VS)
 
 [Motor mechanical power]
 
 P_motor_1=*(#AMK_TorqueLimitPositive_1,#AMK_Actualvelocity_1);
 P_motor_1=*(#P_motor_1,@Pi);
 P_motor_1=/(#P_motor_1,30);
-E_motor_1=Integrate(#P_motor_1);
+P_motor_1=/(#P_motor_1,1000)
+E_motor_1=Integrate(#P_motor_1,0);
 
 P_motor_2=*(#AMK_TorqueLimitPositive_2,#AMK_Actualvelocity_2);
 P_motor_2=*(#P_motor_2,@Pi);
 P_motor_2=/(#P_motor_2,30);
-E_motor_2=Integrate(#P_motor_2);
+P_motor_2=/(#P_motor_2,1000)
+E_motor_2=Integrate(#P_motor_2,0);
 
 P_motor_3=*(#AMK_TorqueLimitPositive_3,#AMK_Actualvelocity_3);
 P_motor_3=*(#P_motor_3,@Pi);
 P_motor_3=/(#P_motor_3,30);
-E_motor_3=Integrate(#P_motor_3);
+P_motor_3=/(#P_motor_3,1000)
+E_motor_3=Integrate(#P_motor_3,0);
 
 P_motor_4=*(#AMK_TorqueLimitPositive_4,#AMK_Actualvelocity_4);
 P_motor_4=*(#P_motor_4,@Pi);
-P_motor_4=/(#P_motor_4,30);
-E_motor_4=Integrate(#P_motor_4);
-
-P_motor_1=/(#P_motor_1,1000)
-P_motor_1=Set(Dim='kw')
-P_motor_2=/(#P_motor_2,1000)
-P_motor_2=Set(Dim='kw')
-P_motor_3=/(#P_motor_3,1000)
-P_motor_3=Set(Dim='kw')
+P_motor_4=/(#P_motor_4,30)
 P_motor_4=/(#P_motor_4,1000)
-P_motor_4=Set(Dim='kw')
+E_motor_4=Integrate(#P_motor_4,0);
+
+P_motor_1=Set(Dim='kW')
+P_motor_2=Set(Dim='kW')
+P_motor_3=Set(Dim='kW')
+P_motor_4=Set(Dim='kW')
+
+E_motor_1=Set(Dim='kJ')
+E_motor_2=Set(Dim='kJ')
+E_motor_3=Set(Dim='kJ')
+E_motor_4=Set(Dim='kJ')
 
 E_motors=+(#E_motor_1,#E_motor_2);
 E_motors=+(#E_motors,#E_motor_3);
 E_motors=+(#E_motors,#E_motor_4);
-E_motors=/(#E_motors,1000);
+
+P_motors=+(#P_motor_1,#P_motor_2);
+P_motors=+(#P_motors,#P_motor_3);
+P_motors=+(#P_motors,#P_motor_4);
 
 Motor_Efficiency=+(#P_motor_1,#P_motor_2);
 Motor_Efficiency=+(#Motor_Efficiency,#P_motor_3);

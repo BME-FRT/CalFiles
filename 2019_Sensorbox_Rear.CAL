@@ -1,4 +1,4 @@
-;last modified 2019. 03. 31. 10:32:18 by bekes    (52)
+;last modified 2020. 01. 26. 12:47:38 by bekes    (36)
 
 [2017_Sensorbox_Rear]
 
@@ -58,8 +58,8 @@ Acceleration_Z_Rear= Set(DIM = g)
 Acceleration_X_Rear_Filtered=F(#Acceleration_X_Rear, F(AVG 0.5 Sec))
 Acceleration_Y_Rear_Filtered=F(#Acceleration_Y_Rear, F(AVG 0.5 Sec))
 Acceleration_Z_Rear_Filtered=F(#Acceleration_Z_Rear, F(AVG 0.5 Sec))
-Yaw_Rate_Filtered=F(#YawRate, F(AVG 0.5 Sec))
-Yaw_Rate_Filtered=*(#Yaw_Rate_Filtered,-1)
+Yaw_Rate_Filtered=F(#Yaw_Rate_Front, F(AVG 0.2 Sec))
+//Yaw_Rate_Filtered=*(#Yaw_Rate_Filtered,-1)
 
 
 Delete(#Yaw_Rate_Rearlb)
