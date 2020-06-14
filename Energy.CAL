@@ -1,4 +1,4 @@
-;last modified 2020. 02. 29. 18:14:18 by bekes    (71)
+;last modified 2020. 06. 12. 12:53:07 by bekes    (10)
 
 
 [Variables]
@@ -22,12 +22,11 @@ P_Useful=Set(DIM='kW')
 E_Useful=Set(DIM='kJ')
 
 [Electric_Energy]
-P_Electric =  *(#HV_Voltage_Before_AIR,#HV_Current)
+P_Electric =  *(#HV_Voltage_Before_AIRs,#HV_Current)
 P_Electric =  /(#P_Electric, 10000)               // Current, Voltage values: /10, kJ
 P_Electric = Set(DIM, kW)
-P_Electric=If(#Throttle_Position_1,>,4,#P_Electric,0)
 
-E_Electric= Integrate(#P_Electric)
+E_Electric= Integrate(#P_Electric,0)
 Ppos=If(#P_Electric,>,0,#P_Electric,0)
 E_Electric_pos=Integrate(#Ppos,0)
 Delete(#Ppos)
@@ -52,7 +51,7 @@ P_downforce=*(#P_downforce,0.03);
 P_downforce=*(#P_downforce,#VS);
 P_RollRes=*(0.08829,#VS);
 P_RollRes=+(#P_RollRes,#P_downforce);
-P_RollRes=If(#Throttle_Position_1,>,4,#P_RollRes,0)            //Szucsnek
+//P_RollRes=If(#Throttle_Position_1,>,4,#P_RollRes,0)            //Szucsnek
 E_RollRes=Integrate(#P_RollRes,0);
 E_RollRes=Set(Dim='kJ');
 Delete(#P_downforce);
@@ -60,7 +59,7 @@ Delete(#P_downforce);
 [Drag]
 
 P_Drag=*(#VS,@c2)
-P_Drag=If(#Throttle_Position_1,>,4,#P_Drag,0)                  //Szucsnek
+//P_Drag=If(#Throttle_Position_1,>,4,#P_Drag,0)                  //Szucsnek
 P_Drag=*(#VS,#P_Drag)
 P_Drag=*(#VS,#P_Drag)
 P_Drag=/(#P_Drag,1000)

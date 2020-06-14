@@ -1,0 +1,17 @@
+;last modified 18.01.2019 09:04:21 by dd    (1)
+
+[Video_Time_@P1]
+C1 = -(#Time, VideoInfo.Offset_@P1)
+;C2 = If(#C1, >, Videoinfo.Duration_@P1, Videoinfo.Duration_@P1, #C1)
+C2 = If(#C1, >, Videoinfo.Duration_@P1, 0, #C1)
+Result=If(#C2, <, 0, 0, #C2)
+Result=Set(Dim='Sec')
+Result=Set(Sensorinfo='Time in video number @P1')
+c1 = If(#Video_Time_@P1,>,0,2^(@P1-1),0)
+VFI = Or(#VFI,#C1)
+
+[FRAME_NUMBER_@P1]
+C1 = *(#Video_Time_@P1, VideoInfo.FPS_@P1)
+Result= Trunc(#C1)
+Result=Set(Dim='frm')
+Result=Set(Sensorinfo='Frame number in video number @P1')
