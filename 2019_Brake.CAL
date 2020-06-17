@@ -1,4 +1,4 @@
-;last modified 2019. 07. 15. 16:29:01 by bekes    (45)
+;last modified 2020. 06. 16. 13:37:57 by bekes    (37)
 
 [2017_Brake]
 
@@ -25,8 +25,8 @@ Brake_Pressure_Front_Raw = /(#Brake_Pressure_Front_Raw, 65536)
 
 Brake_Pressure_Front = And(#Brake_Pressure_32BIT, 0x0FFF0000)
 Brake_Pressure_Front = /(#Brake_Pressure_Front, 65536)
-Brake_Pressure_Front = -(#Brake_Pressure_Front,600)
-Brake_Pressure_Front = /(#Brake_Pressure_Front, 16.625)
+//Brake_Pressure_Front = -(#Brake_Pressure_Front,600)
+//Brake_Pressure_Front = /(#Brake_Pressure_Front, 16.625)
 Brake_Pressure_Front = Set(DIM = bar)
 
 
@@ -37,8 +37,8 @@ Brake_Pr_Rear_Validity = Set(DIM = bool)
 Brake_Pressure_Rear_Raw = And(#Brake_Pressure_32BIT, 0x00000FFF)
 
 Brake_Pressure_Rear = And(#Brake_Pressure_32BIT, 0x00000FFF)
-Brake_Pressure_Rear = -(#Brake_Pressure_Rear, 600)
-Brake_Pressure_Rear = /(#Brake_Pressure_Rear, 16.625)
+//Brake_Pressure_Rear = -(#Brake_Pressure_Rear, 600)
+//Brake_Pressure_Rear = /(#Brake_Pressure_Rear, 16.625)
 Brake_Pressure_Rear = Set(DIM = bar)
 
 Brake_Pressure_Rear = Set(DIM = bar)

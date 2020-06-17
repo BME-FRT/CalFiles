@@ -1,13 +1,13 @@
-;last modified 2019. 07. 03. 22:27:03 by bekes    (1)
+;last modified 2020. 06. 17. 22:41:37 by bekes    (1)
 
 [2019_HV]
 
-HV_Voltage_Before_AIRs = And(#HV_Voltage_Before_&_After_AIRs, 0xFFFF0000)
+HV_Voltage_Before_AIRs = And(#HV_Battery_Status_1_32BIT, 0xFFFF0000)
 HV_Voltage_Before_AIRs = /(#HV_Voltage_Before_AIRs, 65536)
 HV_Voltage_Before_AIRs = /(#HV_Voltage_Before_AIRs, 10)
 HV_Voltage_Before_AIRs = Set(Dim='V')
 
-HV_Voltage_After_AIRs = And(#HV_Voltage_Before_&_After_AIRs, 0x0000FFFF)
+HV_Voltage_After_AIRs = And(#HV_Battery_Status_1_32BIT, 0x0000FFFF)
 HV_Voltage_After_AIRs = /(#HV_Voltage_After_AIRs, 10)
 HV_Voltage_After_AIRs = Set(Dim='V')
 

@@ -1,4 +1,4 @@
-;last modified 2019. 06. 08. 23:23:50 by bekes    (13)
+;last modified 2020. 06. 17. 22:11:27 by bekes    (1)
 
 [2019_Throttle_&_Steering]
 
@@ -29,7 +29,7 @@ Steering_Angle_Derivate_1 = Derivate(#Steering_Angle_1)
 
 Steering_Angle_2 = And(#Throttle_Steering_2_32BIT, 0x00000FFF)
 Steering_Angle_2 = *(#Steering_Angle_2, -1)
-Steering_Angle_2 = +(#Steering_Angle_2, 90)
+Steering_Angle_2 = +(#Steering_Angle_2, 330)
 Steering_Angle_2 = Set(DIM = °)
 Steering_Angle_Derivate_2 = Derivate(#Steering_Angle_2)
 
