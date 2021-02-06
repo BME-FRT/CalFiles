@@ -1,4 +1,4 @@
-;last modified 2019. 09. 02. 9:13:09 by bekes    (1)
+;last modified 2021. 01. 19. 19:35:22 by pungorpeter    (23)
 
 [AMK_Torque_estimated]
 
@@ -38,8 +38,8 @@ Lap=Set(Dim='-')
 
 [Dist]
 
-Dist=Integrate(#VehicleSpeed);
-Dist=Set(DIM='m');
+Dist2=Integrate(#VehicleSpeed);
+Dist2=Set(DIM='m');
 
 [amk_temp]
 

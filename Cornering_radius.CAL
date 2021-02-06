@@ -1,0 +1,11 @@
+;last modified 2021. 02. 05. 15:34:58 by pungorpeter    (1)
+
+[Cornering_radius]
+c_radius=/(#V_GPS,3.6)
+c_radius=Power(#c_radius, 2)
+c_radius=/(#c_radius,#Acceleration_Y_Rear)
+c_radius=/(#c_radius,9.81)
+c_radius=Set(Dim="m")
+c_radius=Limit(#c_radius, -100, 100)
+
+

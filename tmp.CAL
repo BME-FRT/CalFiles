@@ -1,0 +1,13 @@
+;last modified 2021. 02. 05. 16:03:28 by pungorpeter    (1)
+
+[tmp]
+DamperPos_RR2=*(#DamperPos_RR,-1)
+DamperPos_RR2=+(#DamperPos_RR2,28.17)
+DamperPos_FL2=-(#DamperPos_FL,39.91)
+DamperPos_FR2=-(#DamperPos_FR,35.21)
+DamperPos_RL2=-(#DamperPos_RL,28.29)
+Acceleration_X_Filtered=F(#Acceleration_X_Rear, F(AVG 0.2 Sec))
+Acceleration_Y_Filtered=F(#Acceleration_Y_Rear, F(AVG 0.2 Sec))
+Steering_Angle_Filtered=F(#Steering_Angle_1, F(AVG 0.4 Sec))
+
+
